@@ -41,8 +41,8 @@ public class ColumnInfo {
 		column.append(dataType);
 		column.append(Utils.separator);
 		column.append(dataLength);
-		column.append(Utils.separator);
-		column.append(columnComment);
+//		column.append(Utils.separator);
+//		column.append(columnComment);
 
 		return column.toString();
 	}

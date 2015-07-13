@@ -23,6 +23,7 @@ import eccok.utils.Utils;
 public class GenDataMappingCsv implements IConfiguration {
 
 	public static final String GET_ALL_TABLES = "SELECT * FROM User_Tables u ORDER BY u.TABLE_NAME";
+	public static final String GET_GIVEN_TABLE = "SELECT * FROM User_Tables u WHERE u.TABLE_NAME= ?";
 	public static final String ANALYZ_TABLE = "analyze table ? compute STATISTICS";
 	public static final String GET_TABLE_COLUMNS = "SELECT t1.table_name,"
 			+ "       t2.column_name,"
@@ -88,13 +89,37 @@ public class GenDataMappingCsv implements IConfiguration {
 		List<TableInfo> tables = new ArrayList<TableInfo>();
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
+		String tableName = null;
 
 		try {
 			stmt = conn.prepareStatement(GET_ALL_TABLES, ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
 			rs = stmt.executeQuery();
 			while (rs.next()) {
+				tableName = rs.getString("table_name");
 
-				TableInfo table = getTableInfo(conn, rs.getString("table_name"));
+				int numRows = rs.getInt("num_rows");
+				if (numRows <= 0) {
+
+					PreparedStatement countOfTablePs = null;
+					ResultSet countOfTableRs = null;
+					try {
+						String GET_COUNT_OF_TABLE = "SELECT count(1) FROM " + tableName;
+						countOfTablePs = conn.prepareStatement(GET_COUNT_OF_TABLE, ResultSet.TYPE_FORWARD_ONLY,
+								ResultSet.CONCUR_READ_ONLY);
+						countOfTablePs.setQueryTimeout(2000);
+						countOfTableRs = countOfTablePs.executeQuery();
+						if (countOfTableRs.next()) {
+							numRows = countOfTableRs.getInt(1);
+						}
+
+					} finally {
+						Utils.releaseDBResource(countOfTableRs, countOfTablePs);
+					}
+
+				}
+
+				TableInfo table = getTableInfo(conn, tableName);
+				table.setEmptyTable(numRows <= 0);
 				System.out.println(table);
 				tables.add(table);
 			}

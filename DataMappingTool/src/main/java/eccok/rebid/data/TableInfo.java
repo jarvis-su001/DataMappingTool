@@ -50,8 +50,8 @@ public class TableInfo {
 			tableInfo.append(Utils.separator);
 			tableInfo.append(isEmptyTable);
 
-			tableInfo.append(Utils.separator);
-			tableInfo.append(tableComment);
+//			tableInfo.append(Utils.separator);
+//			tableInfo.append(tableComment);
 			tableInfo.append(System.lineSeparator());
 		}
 
