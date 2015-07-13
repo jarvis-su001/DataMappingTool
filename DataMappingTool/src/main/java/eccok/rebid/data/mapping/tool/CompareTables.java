@@ -67,6 +67,9 @@ public class CompareTables implements IConfiguration {
 			String truncateTable = "TRUNCATE TABLE compare_tables";
 			eccOkConn.createStatement().executeUpdate(truncateTable);
 
+			truncateTable ="TRUNCATE TABLE compare_result";
+			eccOkConn.createStatement().executeUpdate(truncateTable);
+
 			okTables = database.getTablesInfo(eccOkConn, eccOkConn, "OK");
 
 			eccInConn = DriverManager.getConnection(ecc_in_database_connection_thin_string,
@@ -92,7 +95,11 @@ public class CompareTables implements IConfiguration {
 				for (ColumnInfo okColumn : okTable.getColumns()) {
 					CompareResult result = new CompareResult();
 					String groupName = dataGroups.getString(okTable.getTableName());
+					if (okTable.isEmptyTable()) {
+						groupName = "TBLS_NOT_USED";
+					}
 					result.setGroupName(groupName);
+
 					result.setOkTableName(okTable.getTableName());
 					result.setOkColumn(okColumn.getColumnName());
 					result.setOkColumnType(okColumn.getDataType());
