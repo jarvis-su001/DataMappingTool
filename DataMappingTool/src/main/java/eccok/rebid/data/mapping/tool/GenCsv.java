@@ -48,4 +48,11 @@ public class GenCsv implements IConfiguration {
 //		}
 
 	}
+
+
+	private static void generateCsv(DatabaseInfo databaseInfo){
+
+	}
+
+
 }

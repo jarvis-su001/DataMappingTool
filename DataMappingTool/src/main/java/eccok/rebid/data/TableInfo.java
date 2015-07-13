@@ -14,25 +14,28 @@ import eccok.utils.Utils;
  *
  */
 public class TableInfo {
-	private String tableName ;
-	private String tableComment ;
-	private boolean isEmptyTable ;
+	private String tableName;
+	private String tableComment;
+	private int recordCount;
+	private boolean isEmptyTable;
 
 	private List<ColumnInfo> columns;
-
 
 	public TableInfo() {
 		super();
 		this.tableName = "";
 		this.tableComment = "";
+		this.recordCount = 0;
 		this.isEmptyTable = false;
 		this.columns = new ArrayList<ColumnInfo>();
 	}
 
-	public TableInfo(String tableName, String tableComment, boolean isEmptyTable, List<ColumnInfo> columns) {
+	public TableInfo(String tableName, String tableComment, int recordCount, boolean isEmptyTable,
+			List<ColumnInfo> columns) {
 		super();
 		this.tableName = tableName;
 		this.tableComment = tableComment;
+		this.recordCount = recordCount;
 		this.isEmptyTable = isEmptyTable;
 		this.columns = columns;
 	}
@@ -50,8 +53,6 @@ public class TableInfo {
 			tableInfo.append(Utils.separator);
 			tableInfo.append(isEmptyTable);
 
-//			tableInfo.append(Utils.separator);
-//			tableInfo.append(tableComment);
 			tableInfo.append(System.lineSeparator());
 		}
 
@@ -89,4 +90,13 @@ public class TableInfo {
 	public void setEmptyTable(boolean isEmptyTable) {
 		this.isEmptyTable = isEmptyTable;
 	}
+
+	public int getRecordCount() {
+		return recordCount;
+	}
+
+	public void setRecordCount(int recordCount) {
+		this.recordCount = recordCount;
+	}
+
 }
