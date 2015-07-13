@@ -11,6 +11,7 @@ package eccok.utils;
 public class Utils {
 
 	public static final String separator = ",";
+	public static final String tableGroupSeparator = "|";
 
 	public static void releaseDBResource(Object source, AutoCloseable... closeableResource) {
 		if (closeableResource == null || closeableResource.length == 0) {

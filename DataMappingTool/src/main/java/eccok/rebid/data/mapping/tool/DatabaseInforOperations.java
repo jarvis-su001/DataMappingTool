@@ -4,7 +4,6 @@
 package eccok.rebid.data.mapping.tool;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,7 +19,7 @@ import eccok.utils.Utils;
  * @author C5023792
  *
  */
-public class GenDataMappingCsv implements IConfiguration {
+public class DatabaseInforOperations {
 
 	public static final String GET_ALL_TABLES = "SELECT * FROM User_Tables u ORDER BY u.TABLE_NAME";
 	public static final String GET_GIVEN_TABLE = "SELECT * FROM User_Tables u WHERE u.TABLE_NAME= ?";
@@ -44,46 +43,7 @@ public class GenDataMappingCsv implements IConfiguration {
 			+ "   AND t1.TABLE_NAME= ?"
 			+ " ORDER BY t1.table_name,t2.COLUMN_ID";
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-
-		Connection eccOkConn = null;
-		Connection eccInConn = null;
-		try {
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-
-		try {
-			eccOkConn = DriverManager.getConnection(ecc_ok_database_connection_thin_string,
-					ecc_ok_database_username,
-					ecc_ok_database_password);
-			getDatabaseInfo(eccOkConn);
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			Utils.releaseDBResource(eccOkConn);
-		}
-
-		try {
-			eccInConn = DriverManager.getConnection(ecc_in_database_connection_thin_string,
-					ecc_in_database_username,
-					ecc_in_database_password);
-			getDatabaseInfo(eccInConn);
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			Utils.releaseDBResource(eccInConn);
-		}
-
-	}
-
-	public static DatabaseInfo getDatabaseInfo(Connection conn) {
+	public DatabaseInfo getDatabaseInfo(Connection conn) {
 		DatabaseInfo okDatabase = new DatabaseInfo();
 
 		List<TableInfo> tables = new ArrayList<TableInfo>();
@@ -134,7 +94,7 @@ public class GenDataMappingCsv implements IConfiguration {
 		return okDatabase;
 	}
 
-	private static TableInfo getTableInfo(Connection conn, String tableName) {
+	private TableInfo getTableInfo(Connection conn, String tableName) {
 		TableInfo table = new TableInfo();
 		List<ColumnInfo> columns = new ArrayList<ColumnInfo>();
 

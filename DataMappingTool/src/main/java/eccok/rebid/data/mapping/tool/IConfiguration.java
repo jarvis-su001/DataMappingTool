@@ -11,6 +11,8 @@ import java.util.ResourceBundle;
  */
 public interface IConfiguration {
 	public static ResourceBundle dataConfig = ResourceBundle.getBundle("dataSource");
+	public static ResourceBundle dataMappping = ResourceBundle.getBundle("dataMapping");
+	public static ResourceBundle dataGroups = ResourceBundle.getBundle("dataGroups");
 
 	public static String ecc_ok_database_username = dataConfig.getString("ecc.ok.database.username");
 	public static String ecc_ok_database_password = dataConfig.getString("ecc.ok.database.password");
