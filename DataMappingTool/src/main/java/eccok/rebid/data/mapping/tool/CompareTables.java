@@ -120,6 +120,12 @@ public class CompareTables implements IConfiguration {
                                     result.setInColumnType(inColumn.getDataType());
                                     result.setInColumnLength(inColumn.getDataLength());
                                     result.setInColumnIndex(inColumn.getColumnIndex());
+
+
+                                    result.setNewColumn(inColumn.getColumnName());
+                                    result.setNewColumnType(inColumn.getDataType());
+                                    result.setNewColumnLength(inColumn.getDataLength());
+//                                    result.setNewColumnIndex(inColumn.getColumnIndex());
                                 }
                             }
 
@@ -146,6 +152,10 @@ public class CompareTables implements IConfiguration {
                     result.setInColumnType(inColumn.getDataType());
                     result.setInColumnLength(inColumn.getDataLength());
                     result.setInColumnIndex(inColumn.getColumnIndex());
+
+                    result.setNewColumn(inColumn.getColumnName());
+                    result.setNewColumnType(inColumn.getDataType());
+                    result.setNewColumnLength(inColumn.getDataLength());
 
                     for (TableInfo okTable : okTables) {
                         if (isSameTable(okTable.getTableName(), inTable.getTableName())) {
@@ -211,8 +221,6 @@ public class CompareTables implements IConfiguration {
                 || mappingOkTableColumn.equalsIgnoreCase(okTableName + "." + okColumn);
     }
 
-    // INSERT INTO compare_result VALUES ('NA','OK_table','ok_column','ok
-    // type',0,'IN_table','In_column','in type',0);
     public static final String insertSQL = "INSERT INTO compare_result VALUES (?, ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     public static final String selectOKRecordSQL = "SELECT * FROM compare_result c WHERE c.ok_table_name = ? AND c.ok_table_column = ?";
     public static final String selectINRecordSQL = "SELECT * FROM compare_result c WHERE c.in_table_name = ? AND c.in_table_column = ?";

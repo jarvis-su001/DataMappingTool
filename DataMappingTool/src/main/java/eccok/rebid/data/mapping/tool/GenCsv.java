@@ -9,31 +9,31 @@ import eccok.utils.Utils;
 
 public class GenCsv implements IConfiguration {
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		DatabaseInforOperations database = new DatabaseInforOperations();
+    /**
+     * @param args
+     */
+    public static void main(String[] args) {
+        DatabaseInforOperations database = new DatabaseInforOperations();
 
-		Connection eccOkConn = null;
-		Connection eccInConn = null;
-		try {
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
+        Connection eccOkConn = null;
+        Connection eccInConn = null;
+        try {
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
 
-		try {
-			eccOkConn = DriverManager.getConnection(ecc_ok_database_connection_thin_string,
-					ecc_ok_database_username,
-					ecc_ok_database_password);
-			DatabaseInfo okDatabase = database.getDatabaseInfo(eccOkConn);
+        try {
+            eccOkConn = DriverManager.getConnection(ecc_ok_database_connection_thin_string,
+                    ecc_ok_database_username,
+                    ecc_ok_database_password);
+            DatabaseInfo okDatabase = database.getDatabaseInfo(eccOkConn);
 
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			Utils.releaseDBResource(eccOkConn);
-		}
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            Utils.releaseDBResource(eccOkConn);
+        }
 
 //		try {
 //			eccInConn = DriverManager.getConnection(ecc_in_database_connection_thin_string,
@@ -47,12 +47,12 @@ public class GenCsv implements IConfiguration {
 //			Utils.releaseDBResource(eccInConn);
 //		}
 
-	}
+    }
 
 
-	private static void generateCsv(DatabaseInfo databaseInfo){
+    private static void generateCsv(DatabaseInfo databaseInfo){
 
-	}
+    }
 
 
 }
