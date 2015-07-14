@@ -164,7 +164,7 @@ public class DatabaseInforOperations implements IConfiguration {
 		return tables;
 	}
 
-	static String sql = "INSERT INTO compare_tables VALUES (?,?,?,?,?,?)";
+	static String sql = "INSERT INTO compare_tables VALUES (?,?,?,?,?,?,?)";
 
 	private void saveTableInfo(Connection conn, TableInfo table, String state) {
 		PreparedStatement stmt = null;
@@ -174,9 +174,10 @@ public class DatabaseInforOperations implements IConfiguration {
 				stmt.setString(1, state);
 				stmt.setString(2, table.getTableName());
 				stmt.setString(3, column.getColumnName());
-				stmt.setString(4, column.getDataType());
-				stmt.setInt(5, column.getDataLength());
-				stmt.setInt(6, table.getRecordCount());
+				stmt.setInt(4, column.getColumnIndex());
+				stmt.setString(5, column.getDataType());
+				stmt.setInt(6, column.getDataLength());
+				stmt.setInt(7, table.getRecordCount());
 				stmt.executeUpdate();
 			}
 
@@ -205,6 +206,7 @@ public class DatabaseInforOperations implements IConfiguration {
 				column.setDataType(rs.getString("DATA_TYPE"));
 				column.setDataLength(rs.getInt("DATA_LENGTH"));
 				column.setColumnComment(rs.getString("column_comments"));
+				column.setColumnIndex(rs.getInt("COLUMN_ID"));
 
 				columns.add(column);
 			}

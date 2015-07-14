@@ -14,6 +14,7 @@ public class ColumnInfo {
 	private String columnName;
 	private String dataType;
 	private int dataLength;
+	private int columnIndex;
 	private String columnComment;
 
 	public ColumnInfo() {
@@ -21,14 +22,16 @@ public class ColumnInfo {
 		this.columnName = "";
 		this.dataType = "";
 		this.dataLength = 0;
+		this.columnIndex = 0;
 		this.columnComment = "";
 	}
 
-	public ColumnInfo(String columnName, String dataType, int dataLength, String columnComment) {
+	public ColumnInfo(String columnName, String dataType, int dataLength, int columnIndex, String columnComment) {
 		super();
 		this.columnName = columnName;
 		this.dataType = dataType;
 		this.dataLength = dataLength;
+		this.columnIndex = columnIndex;
 		this.columnComment = columnComment;
 	}
 
@@ -41,8 +44,8 @@ public class ColumnInfo {
 		column.append(dataType);
 		column.append(Utils.separator);
 		column.append(dataLength);
-//		column.append(Utils.separator);
-//		column.append(columnComment);
+		// column.append(Utils.separator);
+		// column.append(columnComment);
 
 		return column.toString();
 	}
@@ -77,6 +80,14 @@ public class ColumnInfo {
 
 	public void setColumnComment(String columnComment) {
 		this.columnComment = columnComment;
+	}
+
+	public int getColumnIndex() {
+		return columnIndex;
+	}
+
+	public void setColumnIndex(int columnIndex) {
+		this.columnIndex = columnIndex;
 	}
 
 }

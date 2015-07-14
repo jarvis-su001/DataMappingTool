@@ -15,11 +15,13 @@ public class CompareResult {
 	private String okColumn;
 	private String okColumnType;
 	private int okColumnLength;
+	private int okColumnIndex;
 
 	private String inTableName;
 	private String inColumn;
 	private String inColumnType;
 	private int inColumnLength;
+	private int inColumnIndex;
 
 	public CompareResult() {
 		super();
@@ -28,26 +30,31 @@ public class CompareResult {
 		this.okColumn = "";
 		this.okColumnType = "";
 		this.okColumnLength = 0;
+		this.okColumnIndex = 0;
 
 		this.inTableName = "";
 		this.inColumn = "";
 		this.inColumnType = "";
 		this.inColumnLength = 0;
+		this.inColumnIndex = 0;
 	}
 
 	public CompareResult(String groupName, String okTableName, String okColumn, String okColumnType,
-			int okColumnLength, String inTableName, String inColumn, String inColumnType, int inColumnLength) {
+			int okColumnLength, int okColumnIndex, String inTableName, String inColumn, String inColumnType,
+			int inColumnLength, int inColumnIndex) {
 		super();
 		this.groupName = groupName;
 		this.okTableName = okTableName;
 		this.okColumn = okColumn;
 		this.okColumnType = okColumnType;
 		this.okColumnLength = okColumnLength;
+		this.okColumnIndex = okColumnIndex;
 
 		this.inTableName = inTableName;
 		this.inColumn = inColumn;
 		this.inColumnType = inColumnType;
 		this.inColumnLength = inColumnLength;
+		this.inColumnIndex = inColumnIndex;
 	}
 
 	public String getGroupName() {
@@ -120,6 +127,22 @@ public class CompareResult {
 
 	public void setInTableName(String inTableName) {
 		this.inTableName = inTableName;
+	}
+
+	public int getOkColumnIndex() {
+		return okColumnIndex;
+	}
+
+	public void setOkColumnIndex(int okColumnIndex) {
+		this.okColumnIndex = okColumnIndex;
+	}
+
+	public int getInColumnIndex() {
+		return inColumnIndex;
+	}
+
+	public void setInColumnIndex(int inColumnIndex) {
+		this.inColumnIndex = inColumnIndex;
 	}
 
 }

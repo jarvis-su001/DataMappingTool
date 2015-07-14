@@ -67,7 +67,7 @@ public class CompareTables implements IConfiguration {
 			String truncateTable = "TRUNCATE TABLE compare_tables";
 			eccOkConn.createStatement().executeUpdate(truncateTable);
 
-			truncateTable ="TRUNCATE TABLE compare_result";
+			truncateTable = "TRUNCATE TABLE compare_result";
 			eccOkConn.createStatement().executeUpdate(truncateTable);
 
 			okTables = database.getTablesInfo(eccOkConn, eccOkConn, "OK");
@@ -104,6 +104,7 @@ public class CompareTables implements IConfiguration {
 					result.setOkColumn(okColumn.getColumnName());
 					result.setOkColumnType(okColumn.getDataType());
 					result.setOkColumnLength(okColumn.getDataLength());
+					result.setOkColumnIndex(okColumn.getColumnIndex());
 
 					for (TableInfo inTable : inTables) {
 						if (isSameTable(okTable.getTableName(), inTable.getTableName())) {
@@ -118,7 +119,7 @@ public class CompareTables implements IConfiguration {
 									result.setInColumn(inColumn.getColumnName());
 									result.setInColumnType(inColumn.getDataType());
 									result.setInColumnLength(inColumn.getDataLength());
-
+									result.setInColumnIndex(inColumn.getColumnIndex());
 								}
 							}
 
@@ -140,9 +141,11 @@ public class CompareTables implements IConfiguration {
 					String groupName = dataGroups.getString(inTable.getTableName());
 					result.setGroupName(groupName);
 					result.setInTableName(inTable.getTableName());
+					
 					result.setInColumn(inColumn.getColumnName());
 					result.setInColumnType(inColumn.getDataType());
 					result.setInColumnLength(inColumn.getDataLength());
+					result.setInColumnIndex(inColumn.getColumnIndex());
 
 					for (TableInfo okTable : okTables) {
 						if (isSameTable(okTable.getTableName(), inTable.getTableName())) {
@@ -155,6 +158,7 @@ public class CompareTables implements IConfiguration {
 									result.setOkColumn(okColumn.getColumnName());
 									result.setOkColumnType(okColumn.getDataType());
 									result.setOkColumnLength(okColumn.getDataLength());
+									result.setOkColumnIndex(okColumn.getColumnIndex());
 								}
 							}
 
@@ -191,7 +195,7 @@ public class CompareTables implements IConfiguration {
 
 	// INSERT INTO compare_result VALUES ('NA','OK_table','ok_column','ok
 	// type',0,'IN_table','In_column','in type',0);
-	public static final String insertSQL = "INSERT INTO compare_result VALUES (?, ?,?,?,?,?,?,?,?)";
+	public static final String insertSQL = "INSERT INTO compare_result VALUES (?, ?,?,?,?,?,?,?,?,?,?)";
 	public static final String selectOKRecordSQL = "SELECT * FROM compare_result c WHERE c.ok_table_name = ? AND c.ok_table_column = ?";
 	public static final String selectINRecordSQL = "SELECT * FROM compare_result c WHERE c.in_table_name = ? AND c.in_table_column = ?";
 
@@ -223,11 +227,13 @@ public class CompareTables implements IConfiguration {
 				stmt3.setString(3, result.getOkColumn());
 				stmt3.setString(4, result.getOkColumnType());
 				stmt3.setInt(5, result.getOkColumnLength());
+				stmt3.setInt(6, result.getOkColumnIndex());
 
-				stmt3.setString(6, result.getInTableName());
-				stmt3.setString(7, result.getInColumn());
-				stmt3.setString(8, result.getInColumnType());
-				stmt3.setInt(9, result.getInColumnLength());
+				stmt3.setString(7, result.getInTableName());
+				stmt3.setString(8, result.getInColumn());
+				stmt3.setString(9, result.getInColumnType());
+				stmt3.setInt(10, result.getInColumnLength());
+				stmt3.setInt(11, result.getInColumnIndex());
 
 				stmt3.executeUpdate();
 			}
