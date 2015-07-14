@@ -46,7 +46,7 @@ public class DatabaseInforOperations implements IConfiguration {
 
 	public DatabaseInfo getDatabaseInfo(Connection conn) {
 		DatabaseInfo okDatabase = new DatabaseInfo();
-		List<TableGroup> tableGroups = getAllTableGroups();
+		List<TableGroup> tableGroups = null;
 
 		List<TableInfo> tables = new ArrayList<TableInfo>();
 		PreparedStatement stmt = null;
@@ -91,6 +91,7 @@ public class DatabaseInforOperations implements IConfiguration {
 		} finally {
 			Utils.releaseDBResource(rs, stmt);
 		}
+		
 
 		okDatabase.setTableGroups(tableGroups);
 		return okDatabase;
@@ -220,33 +221,4 @@ public class DatabaseInforOperations implements IConfiguration {
 		return table;
 	}
 
-	private List<TableGroup> getAllTableGroups() {
-		List<TableGroup> tableGroups = new ArrayList<TableGroup>();
-
-		TableGroup STATIC_TBLS = new TableGroup();
-		STATIC_TBLS.setGroupName("STATIC_TBLS");
-		STATIC_TBLS.setTableNames(dataGroups.getString("STATIC_TBLS").split(Utils.tableGroupSeparator));
-
-		TableGroup DATALOAD = new TableGroup();
-		DATALOAD.setGroupName("DATALOAD");
-		DATALOAD.setTableNames(dataGroups.getString("DATALOAD").split(Utils.tableGroupSeparator));
-
-		TableGroup TRANSACTION_TBLS = new TableGroup();
-		TRANSACTION_TBLS.setGroupName("TRANSACTION_TBLS");
-		TRANSACTION_TBLS.setTableNames(dataGroups.getString("TRANSACTION_TBLS").split(Utils.tableGroupSeparator));
-
-		TableGroup PAYMENT_TBLS = new TableGroup();
-		PAYMENT_TBLS.setGroupName("PAYMENT_TBLS");
-		PAYMENT_TBLS.setTableNames(dataGroups.getString("PAYMENT_TBLS").split(Utils.tableGroupSeparator));
-
-		TableGroup Misc_System = new TableGroup();
-		Misc_System.setGroupName("Misc-System");
-		Misc_System.setTableNames(dataGroups.getString("Misc-System").split(Utils.tableGroupSeparator));
-
-		TableGroup TBLS_NOT_USED = new TableGroup();
-		TBLS_NOT_USED.setGroupName("TBLS_NOT_USED");
-		TBLS_NOT_USED.setTableNames(dataGroups.getString("TBLS_NOT_USED").split(Utils.tableGroupSeparator));
-
-		return tableGroups;
-	}
 }
