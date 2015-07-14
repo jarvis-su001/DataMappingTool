@@ -195,7 +195,7 @@ public class CompareTables implements IConfiguration {
 
 	// INSERT INTO compare_result VALUES ('NA','OK_table','ok_column','ok
 	// type',0,'IN_table','In_column','in type',0);
-	public static final String insertSQL = "INSERT INTO compare_result VALUES (?, ?,?,?,?,?,?,?,?,?,?)";
+	public static final String insertSQL = "INSERT INTO compare_result VALUES (?, ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	public static final String selectOKRecordSQL = "SELECT * FROM compare_result c WHERE c.ok_table_name = ? AND c.ok_table_column = ?";
 	public static final String selectINRecordSQL = "SELECT * FROM compare_result c WHERE c.in_table_name = ? AND c.in_table_column = ?";
 
@@ -234,6 +234,15 @@ public class CompareTables implements IConfiguration {
 				stmt3.setString(9, result.getInColumnType());
 				stmt3.setInt(10, result.getInColumnLength());
 				stmt3.setInt(11, result.getInColumnIndex());
+				
+				
+				stmt3.setString(12, result.getNewTableName());
+				stmt3.setString(13, result.getNewColumn());
+				stmt3.setString(14, result.getNewColumnType());
+				stmt3.setInt(15, result.getNewColumnLength());
+				stmt3.setInt(16, result.getNewColumnIndex());
+				
+				stmt3.setString(17, result.getVersionComments());
 
 				stmt3.executeUpdate();
 			}

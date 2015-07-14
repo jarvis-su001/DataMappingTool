@@ -23,6 +23,14 @@ public class CompareResult {
 	private int inColumnLength;
 	private int inColumnIndex;
 
+	private String newTableName;
+	private String newColumn;
+	private String newColumnType;
+	private int newColumnLength;
+	private int newColumnIndex;
+
+	private String versionComments;
+
 	public CompareResult() {
 		super();
 		this.groupName = "NA";
@@ -37,11 +45,20 @@ public class CompareResult {
 		this.inColumnType = "";
 		this.inColumnLength = 0;
 		this.inColumnIndex = 0;
+
+		this.newTableName = "";
+		this.newColumn = "";
+		this.newColumnType = "";
+		this.newColumnLength = 0;
+		this.newColumnIndex = 0;
+
+		this.versionComments = "";
 	}
 
 	public CompareResult(String groupName, String okTableName, String okColumn, String okColumnType,
 			int okColumnLength, int okColumnIndex, String inTableName, String inColumn, String inColumnType,
-			int inColumnLength, int inColumnIndex) {
+			int inColumnLength, int inColumnIndex, String newTableName, String newColumn, String newColumnType,
+			int newColumnLength, int newColumnIndex, String versionComments) {
 		super();
 		this.groupName = groupName;
 		this.okTableName = okTableName;
@@ -55,6 +72,14 @@ public class CompareResult {
 		this.inColumnType = inColumnType;
 		this.inColumnLength = inColumnLength;
 		this.inColumnIndex = inColumnIndex;
+
+		this.newTableName = newTableName;
+		this.newColumn = newColumn;
+		this.newColumnType = newColumnType;
+		this.newColumnLength = newColumnLength;
+		this.newColumnIndex = newColumnIndex;
+
+		this.versionComments = versionComments;
 	}
 
 	public String getGroupName() {
@@ -143,6 +168,54 @@ public class CompareResult {
 
 	public void setInColumnIndex(int inColumnIndex) {
 		this.inColumnIndex = inColumnIndex;
+	}
+
+	public String getNewTableName() {
+		return newTableName;
+	}
+
+	public void setNewTableName(String newTableName) {
+		this.newTableName = newTableName;
+	}
+
+	public String getNewColumn() {
+		return newColumn;
+	}
+
+	public void setNewColumn(String newColumn) {
+		this.newColumn = newColumn;
+	}
+
+	public String getNewColumnType() {
+		return newColumnType;
+	}
+
+	public void setNewColumnType(String newColumnType) {
+		this.newColumnType = newColumnType;
+	}
+
+	public int getNewColumnLength() {
+		return newColumnLength;
+	}
+
+	public void setNewColumnLength(int newColumnLength) {
+		this.newColumnLength = newColumnLength;
+	}
+
+	public int getNewColumnIndex() {
+		return newColumnIndex;
+	}
+
+	public void setNewColumnIndex(int newColumnIndex) {
+		this.newColumnIndex = newColumnIndex;
+	}
+
+	public String getVersionComments() {
+		return versionComments;
+	}
+
+	public void setVersionComments(String versionComments) {
+		this.versionComments = versionComments;
 	}
 
 }
