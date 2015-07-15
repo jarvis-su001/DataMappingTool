@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
@@ -119,19 +118,19 @@ public class LoadFromDatabaseToExcel implements IConfiguration {
     public static void writeToExcel(String fileName, List<CompareResult> results) {
 
         File file = new File(fileName);
-         if (file.exists()) {
-         file.delete();
-         file = new File(fileName);
-         }
+        if (file.exists()) {
+            file.delete();
+            file = new File(fileName);
+        }
 
-        String[] titleArray = { "Group name","OK table name", "OK Column", "OK column Type", "OK column length",
+        String[] titleArray = { "Group name", "OK table name", "OK Column", "OK column Type", "OK column length",
                 "IN table Level", " IN table name", "IN Column", "IN column Type", "IN column length",
-                "New table Level", " New table name", "New Column", "New column Type", "New column length","  ",
+                "New table Level", " New table name", "New Column", "New column Type", "New column length", "  ",
                 "Version comments" };
         // 获取参数个数作为excel列数
-        int columeCount = titleArray.length ;
+        int columeCount = titleArray.length;
 
-//        columeCount = 17;
+        // columeCount = 17;
         // 获取List size作为excel行数
         int rowCount = results.size();
 
@@ -161,10 +160,6 @@ public class LoadFromDatabaseToExcel implements IConfiguration {
 
         int index = 0;
 
-        String preTable = "";
-        String currTable ="";
-
-
         // 写入数据
         for (CompareResult compareResult : results) {
             // logger.info("写入一行");
@@ -191,10 +186,9 @@ public class LoadFromDatabaseToExcel implements IConfiguration {
             row.getCell(13).setCellValue(compareResult.getNewColumnType());
             row.getCell(14).setCellValue(compareResult.getNewColumnLength());
 
-            row.getCell(15).setCellValue("NNNNNNNNN");
+            row.getCell(15).setCellValue("");
             row.getCell(16).setCellValue(compareResult.getVersionComments());
             index++;
-
         }
 
         // 写到磁盘上
