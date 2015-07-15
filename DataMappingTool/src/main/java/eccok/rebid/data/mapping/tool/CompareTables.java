@@ -173,7 +173,6 @@ public class CompareTables implements IConfiguration {
                             }
 
                         }
-
                     }
 
                     insertIntoCompareTable(result, eccOkConn);
