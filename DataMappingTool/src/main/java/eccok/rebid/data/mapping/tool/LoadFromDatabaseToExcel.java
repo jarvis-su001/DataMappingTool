@@ -16,9 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFFont;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.util.HSSFColor;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFFont;
@@ -120,10 +119,10 @@ public class LoadFromDatabaseToExcel implements IConfiguration {
     public static void writeToExcel(String fileName, List<CompareResult> results) {
 
         File file = new File(fileName);
-        // if (file.exists()) {
-        // file.delete();
-        // file = new File(fileName);
-        // }
+         if (file.exists()) {
+         file.delete();
+         file = new File(fileName);
+         }
 
         String[] titleArray = { "Group name","OK table name", "OK Column", "OK column Type", "OK column length",
                 "IN table Level", " IN table name", "IN Column", "IN column Type", "IN column length",
@@ -148,16 +147,24 @@ public class LoadFromDatabaseToExcel implements IConfiguration {
             xssfSheet.setColumnWidth(m, 6000);
             XSSFCellStyle style = xssfWorkbook.createCellStyle();
             XSSFFont font = xssfWorkbook.createFont();
-            font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+            font.setBoldweight(XSSFFont.BOLDWEIGHT_BOLD);
             short color = HSSFColor.RED.index;
+
             font.setColor(color);
             style.setFont(font);
+
+            style.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
             // 填写数据
             cell.setCellStyle(style);
             cell.setCellValue(titleArray[m]);
         }
 
         int index = 0;
+
+        String preTable = "";
+        String currTable ="";
+
+
         // 写入数据
         for (CompareResult compareResult : results) {
             // logger.info("写入一行");
@@ -184,9 +191,10 @@ public class LoadFromDatabaseToExcel implements IConfiguration {
             row.getCell(13).setCellValue(compareResult.getNewColumnType());
             row.getCell(14).setCellValue(compareResult.getNewColumnLength());
 
-            row.getCell(16).setCellValue("NNNNNNNNN");
-            row.getCell(17).setCellValue(compareResult.getVersionComments());
+            row.getCell(15).setCellValue("NNNNNNNNN");
+            row.getCell(16).setCellValue(compareResult.getVersionComments());
             index++;
+
         }
 
         // 写到磁盘上

@@ -44,6 +44,8 @@ public class CompareTables implements IConfiguration {
             + "   AND t1.TABLE_NAME= ?"
             + " ORDER BY t1.table_name,t2.COLUMN_ID";
 
+
+
     /**
      * @param args
      */
@@ -121,11 +123,10 @@ public class CompareTables implements IConfiguration {
                                     result.setInColumnLength(inColumn.getDataLength());
                                     result.setInColumnIndex(inColumn.getColumnIndex());
 
-
                                     result.setNewColumn(inColumn.getColumnName());
                                     result.setNewColumnType(inColumn.getDataType());
                                     result.setNewColumnLength(inColumn.getDataLength());
-//                                    result.setNewColumnIndex(inColumn.getColumnIndex());
+                                    // result.setNewColumnIndex(inColumn.getColumnIndex());
                                 }
                             }
 
@@ -246,6 +247,7 @@ public class CompareTables implements IConfiguration {
             if (rs.next() || rs2.next()) {
 
             } else {
+                String level = getTableLevel(result.getInTableName());
                 stmt3 = conn.prepareStatement(insertSQL);
                 stmt3.setString(1, result.getGroupName());
                 stmt3.setString(2, result.getOkTableName());
@@ -254,14 +256,14 @@ public class CompareTables implements IConfiguration {
                 stmt3.setInt(5, result.getOkColumnLength());
                 stmt3.setInt(6, result.getOkColumnIndex());
 
-                stmt3.setString(7, result.getInTableLevel());
+                stmt3.setString(7, level);
                 stmt3.setString(8, result.getInTableName());
                 stmt3.setString(9, result.getInColumn());
                 stmt3.setString(10, result.getInColumnType());
                 stmt3.setInt(11, result.getInColumnLength());
                 stmt3.setInt(12, result.getInColumnIndex());
 
-                stmt3.setString(13, result.getNewTableLevel());
+                stmt3.setString(13, level);
                 stmt3.setString(14, result.getNewTableName());
                 stmt3.setString(15, result.getNewColumn());
                 stmt3.setString(16, result.getNewColumnType());
@@ -285,6 +287,18 @@ public class CompareTables implements IConfiguration {
     static boolean isOkToolTables(String tableName) {
         return "COMPARE_TABLES".equalsIgnoreCase(tableName)
                 || "COMPARE_RESULT".equalsIgnoreCase(tableName);
+    }
+
+    static String getTableLevel(String tableName) {
+        String coreTablesList = dataGroups.getString("coreTables");
+         String[] coreTables = coreTablesList.split(",");
+        for (String core : coreTables) {
+
+            if (core.equalsIgnoreCase(tableName)) {
+                return "CORE";
+            }
+        }
+        return "APP";
     }
 
 }
