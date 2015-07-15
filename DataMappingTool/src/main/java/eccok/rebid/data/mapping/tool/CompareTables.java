@@ -220,7 +220,7 @@ public class CompareTables implements IConfiguration {
                 || mappingOkTableColumn.equalsIgnoreCase(okTableName + "." + okColumn);
     }
 
-    public static final String insertSQL = "INSERT INTO compare_result VALUES (?, ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    public static final String insertSQL = "INSERT INTO compare_result VALUES (?, ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     public static final String selectOKRecordSQL = "SELECT * FROM compare_result c WHERE c.ok_table_name = ? AND c.ok_table_column = ?";
     public static final String selectINRecordSQL = "SELECT * FROM compare_result c WHERE c.in_table_name = ? AND c.in_table_column = ?";
 
@@ -254,19 +254,21 @@ public class CompareTables implements IConfiguration {
                 stmt3.setInt(5, result.getOkColumnLength());
                 stmt3.setInt(6, result.getOkColumnIndex());
 
-                stmt3.setString(7, result.getInTableName());
-                stmt3.setString(8, result.getInColumn());
-                stmt3.setString(9, result.getInColumnType());
-                stmt3.setInt(10, result.getInColumnLength());
-                stmt3.setInt(11, result.getInColumnIndex());
+                stmt3.setString(7, result.getInTableLevel());
+                stmt3.setString(8, result.getInTableName());
+                stmt3.setString(9, result.getInColumn());
+                stmt3.setString(10, result.getInColumnType());
+                stmt3.setInt(11, result.getInColumnLength());
+                stmt3.setInt(12, result.getInColumnIndex());
 
-                stmt3.setString(12, result.getNewTableName());
-                stmt3.setString(13, result.getNewColumn());
-                stmt3.setString(14, result.getNewColumnType());
-                stmt3.setInt(15, result.getNewColumnLength());
-                stmt3.setInt(16, result.getNewColumnIndex());
+                stmt3.setString(13, result.getNewTableLevel());
+                stmt3.setString(14, result.getNewTableName());
+                stmt3.setString(15, result.getNewColumn());
+                stmt3.setString(16, result.getNewColumnType());
+                stmt3.setInt(17, result.getNewColumnLength());
+                stmt3.setInt(18, result.getNewColumnIndex());
 
-                stmt3.setString(17, result.getVersionComments());
+                stmt3.setString(19, result.getVersionComments());
 
                 stmt3.executeUpdate();
             }
