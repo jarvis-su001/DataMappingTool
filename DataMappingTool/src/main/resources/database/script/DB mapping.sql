@@ -100,10 +100,13 @@ SELECT t.group_name,
        t.ok_table_column_type,
        t.ok_table_column_length,
        
+       t.in_table_level,
        t.in_table_name,
        t.in_table_column,
        t.in_table_column_type,
        t.in_table_column_length,
+       
+       t.new_table_level,
        t.new_table_name,
        t.new_table_column,
        t.new_table_column_type,
@@ -111,7 +114,7 @@ SELECT t.group_name,
        '',
        t.version_comment
   FROM compare_result t
-  WHERE t.group_name ='STATIC_TBLS'
+  --WHERE t.group_name ='STATIC_TBLS'
  ORDER BY t.group_name,
           t.ok_table_name,
           t.ok_table_column_index,
@@ -119,8 +122,16 @@ SELECT t.group_name,
           t.in_table_column_index;
 
 TRUNCATE TABLE compare_tables;
+TRUNCATE TABLE compare_result;
 INSERT INTO compare_result VALUES ('NA','OK_table','ok_column','ok type',0,'IN_table','In_column','in type',0);
 
 SELECT * FROM compare_result c WHERE c.ok_table_name ='' AND c.ok_table_column ='';
 
 SELECT * FROM compare_result c WHERE c.in_table_name ='' AND c.in_table_column ='';
+
+CREATE TABLE compare_result_1213213131313 AS SELECT * FROM compare_result;
+DROP TABLE compare_result_1213213131313;
+
+SELECT * FROM compare_result;
+SELECT * FROM user_tables u WHERE u.TABLE_NAME LIKE 'COMPARE_RESULT%';
+

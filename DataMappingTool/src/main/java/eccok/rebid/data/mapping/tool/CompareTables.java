@@ -22,7 +22,7 @@ import eccok.utils.Utils;
  */
 public class CompareTables implements IConfiguration {
 
-    public static final String GET_ALL_TABLES = "SELECT * FROM User_Tables u ORDER BY u.TABLE_NAME";
+    public static final String GET_ALL_TABLES = "SELECT * FROM User_Tables u WHERE u.TABLE_NAME NOT LIKE 'COMPARE_RESULT%' ORDER BY u.TABLE_NAME ";
     public static final String GET_GIVEN_TABLE = "SELECT * FROM User_Tables u WHERE u.TABLE_NAME= ?";
     public static final String ANALYZ_TABLE = "analyze table ? compute STATISTICS";
     public static final String GET_TABLE_COLUMNS = "SELECT t1.table_name,"
@@ -43,8 +43,6 @@ public class CompareTables implements IConfiguration {
             + "   AND t2.table_name = t4.table_name"
             + "   AND t1.TABLE_NAME= ?"
             + " ORDER BY t1.table_name,t2.COLUMN_ID";
-
-
 
     /**
      * @param args
@@ -190,6 +188,9 @@ public class CompareTables implements IConfiguration {
     }
 
     static boolean isSameTable(String okTableName, String inTableName) {
+        if (okTableName.startsWith("COMPARE_RESULT")) {
+            okTableName = "COMPARE_RESULT";
+        }
 
         String mappingInTable = dataMappping.getString(okTableName);
 
@@ -224,16 +225,19 @@ public class CompareTables implements IConfiguration {
     public static final String insertSQL = "INSERT INTO compare_result VALUES (?, ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     public static final String selectOKRecordSQL = "SELECT * FROM compare_result c WHERE c.ok_table_name = ? AND c.ok_table_column = ?";
     public static final String selectINRecordSQL = "SELECT * FROM compare_result c WHERE c.in_table_name = ? AND c.in_table_column = ?";
+    public static final String truncateTable = "TRUNCATE TABLE compare_result";
 
     public static void insertIntoCompareTable(CompareResult result, Connection conn) {
 
         PreparedStatement stmt = null;
+
         ResultSet rs = null;
         PreparedStatement stmt2 = null;
         ResultSet rs2 = null;
         PreparedStatement stmt3 = null;
 
         try {
+
             stmt = conn.prepareStatement(selectOKRecordSQL, ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
             stmt.setString(1, result.getOkTableName());
             stmt.setString(2, result.getOkColumn());
@@ -280,18 +284,51 @@ public class CompareTables implements IConfiguration {
             Utils.releaseDBResource(rs, stmt);
             Utils.releaseDBResource(rs2, stmt2);
             Utils.releaseDBResource(stmt3);
+
+        }
+
+    }
+
+    public static void backAndTruncateTable(Connection conn) {
+
+        PreparedStatement stmt4 = null;
+        PreparedStatement stmt5 = null;
+
+        String back_sql = "CREATE TABLE compare_result_" + System.currentTimeMillis()
+                + " AS SELECT * FROM compare_result";
+        try {
+            stmt4 = conn.prepareStatement(back_sql);
+            stmt4.executeUpdate();
+            stmt5 = conn.prepareStatement(truncateTable);
+            stmt5.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            Utils.releaseDBResource(stmt4);
+            Utils.releaseDBResource(stmt5);
         }
 
     }
 
     static boolean isOkToolTables(String tableName) {
+
+        if (tableName.startsWith("COMPARE_RESULT")) {
+            return true;
+        }
+        try {
+            dataMappping.getString(tableName);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return true;
+        }
+
         return "COMPARE_TABLES".equalsIgnoreCase(tableName)
-                || "COMPARE_RESULT".equalsIgnoreCase(tableName);
+                || "COMPARE_RESULT".equalsIgnoreCase(tableName) || tableName.startsWith("COMPARE_RESULT");
     }
 
     static String getTableLevel(String tableName) {
         String coreTablesList = dataGroups.getString("coreTables");
-         String[] coreTables = coreTablesList.split(",");
+        String[] coreTables = coreTablesList.split(",");
         for (String core : coreTables) {
 
             if (core.equalsIgnoreCase(tableName)) {

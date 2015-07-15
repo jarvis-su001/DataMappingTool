@@ -19,7 +19,7 @@ import eccok.utils.Utils;
  *
  */
 public class LoadIntoDatabaseFromExcel implements IConfiguration {
-    static String fileName = "E:/Document/OKECC/ECCOK_Data Mapping_temp.xlsx";
+    static String fileName = "D:/git/DataMappingTool/src/documents/ECCOK_Data Mapping_temp.xlsx";
 
     public static void main(String[] args) {
         Connection eccOkConn = null;
@@ -29,6 +29,7 @@ public class LoadIntoDatabaseFromExcel implements IConfiguration {
                     ecc_ok_database_username,
                     ecc_ok_database_password);
 
+            CompareTables.backAndTruncateTable(eccOkConn);
             XSSFWorkbook xssfWorkbook = new XSSFWorkbook(fileName);
             XSSFSheet xssfSheet = xssfWorkbook.getSheetAt(0);
 
