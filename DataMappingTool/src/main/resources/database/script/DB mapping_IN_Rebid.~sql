@@ -43,10 +43,3 @@ SELECT * FROM user_constraints;
  AND th.entry_datetime >=to_date('2015-06-01','YYYY-MM-DD') AND
  th.entry_datetime < to_date('2015-07-01','YYYY-MM-DD');
  
- 
- SELECT COUNT(*) FROM office;
-SELECT COUNT(1) OVER() c,o.* FROM office o WHERE TRIM(o.phone_number) IS NOT NULL;
-SELECT DISTINCT o.office_status_id,o.office_type_id FROM office o;
-
-SELECT * FROM OFFICE_GEOGRAPHY;
- 

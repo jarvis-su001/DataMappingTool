@@ -135,3 +135,7 @@ DROP TABLE compare_result_1213213131313;
 SELECT * FROM compare_result;
 SELECT * FROM user_tables u WHERE u.TABLE_NAME LIKE 'COMPARE_RESULT%';
 
+
+SELECT COUNT(1) OVER(),o.* FROM office o;
+SELECT COUNT(1) OVER(),o.* FROM office o WHERE trim(o.address_01) IS NOT NULL;
+SELECT COUNT(1) OVER(),o.* FROM office o WHERE trim(o.address_02) IS NOT NULL;

@@ -133,5 +133,5 @@ CREATE TABLE compare_result_1213213131313 AS SELECT * FROM compare_result;
 DROP TABLE compare_result_1213213131313;
 
 SELECT * FROM compare_result;
-SELECT * FROM user_tables u WHERE u.TABLE_NAME LIKE 'compare_result%';
+SELECT * FROM user_tables u WHERE u.TABLE_NAME LIKE 'COMPARE_RESULT%';
 
