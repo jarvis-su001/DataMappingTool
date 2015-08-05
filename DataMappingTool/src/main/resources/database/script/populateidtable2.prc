@@ -22,17 +22,53 @@ BEGIN
       FETCH c_idtable
         INTO seqid, nextid, seqname;
       EXIT WHEN c_idtable%NOTFOUND;
-    
+      /* the following segments should be adjusted for each States */
       IF seqid = 0 THEN
-        min_val    := 0;
+        min_val    := 1;
         max_val    := 2000000000000000000;
-        incrbucket := 200;
-      ELSE
+        incrbucket := 20;
+      
+      ELSIF seqid = 12 THEN
+        min_val    := 90000000;
+        max_val    := 91000000;
+        incrbucket := 50;
+      
+      ELSIF seqid = 13 THEN
+        min_val    := 80000000;
+        max_val    := 89999999;
+        incrbucket := 50;
+      
+      ELSIF seqid = 14 OR seqid = 15 THEN
         min_val    := 0;
+        max_val    := 0;
+        incrbucket := 20;
+      
+      ELSIF seqid = 16 THEN
+        min_val    := 0;
+        max_val    := 999499;
+        incrbucket := 20;
+      
+      ELSIF seqid IN (17, 18, 19, 23, 33) THEN
+        min_val    := 100;
+        max_val    := 2100000000;
+        incrbucket := 20;
+      
+      ELSIF seqid = 20 THEN
+        min_val    := 10000;
+        max_val    := 2100000000;
+        incrbucket := 20;
+        
+        ELSIF seqid = 29 THEN
+        min_val    := 20000;
+        max_val    := 2100000000;
+        incrbucket := 10;
+      
+      ELSE
+        min_val    := 1;
         max_val    := 2100000000;
         incrbucket := 20;
       END IF;
-    
+      /*end the segment */
       IF seqid != max_var_id THEN
         INSERT INTO idtable2
           (seq_id, min_val, max_val, nextid, dflt_incr, seq_name, modtime)
