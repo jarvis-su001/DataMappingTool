@@ -21,4 +21,13 @@ public class DateTools {
         return allDays;
     }
 
+    public final static long getCurrTimeInMillisecs() {
+        return System.currentTimeMillis();
+    }
+
+    public final static Date getCurrTime() {
+        return new Date(getCurrTimeInMillisecs());
+    }
+
+
 }

@@ -1,6 +1,8 @@
 package com.jarvis.tools;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -9,10 +11,22 @@ import java.util.List;
 public class FileTools {
 
     public static List<File> getAllFiles(File path) {
-        return null;
+        List<File> fileList = new ArrayList<>();
+        File[] files = path.listFiles();
+        fileList = Arrays.asList(files);
+        return fileList;
     }
 
     public static List<File> getAllFiles(String path) {
-        return null;
+        File folder = new File(path);
+        return getAllFiles(folder);
+    }
+
+    public static void copyFiles(String source, String destination) {
+        copyFiles(new File(source), new File(destination));
+    }
+
+    public static void copyFiles(File source, File destination) {
+
     }
 }
